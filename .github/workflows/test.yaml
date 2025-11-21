@@ -1,0 +1,33 @@
+name: test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/**"
+      - "tests/**"
+      - ".github/workflows/test.yaml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "tests/**"
+      - ".github/workflows/test.yaml"
+jobs:
+  pytest:
+    strategy:
+      fail-fast: false # Continue running jobs even if one fails
+      matrix:
+        # https://docs.github.com/en/actions/concepts/runners/about-larger-runners#about-macos-larger-runners
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          activate-environment: true
+      - run: uv python install
+      - run: uv sync
+      - run: uvx --with 'huggingface_hub' hf download Wespeaker/wespeaker-voxceleb-resnet34
+      - run: uv run pytest

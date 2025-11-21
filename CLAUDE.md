@@ -1,0 +1,20 @@
+- **Always** use type hints for function/method parameters and return types.
+- Use latest type hinting format (Python 3.12). For example:
+  - Use `list[T]` instead of `List[T]`.
+  - Use `dict[K, V]` instead of `Dict[K, V]`.
+  - Use `tuple[T, ...]` instead of `Tuple[T, ...]`.
+  - Use `set[T]` instead of `Set[T]`.
+- Use `import numpy.typing as npt` to import numpy typing module.
+- When annotating numpy arrays, use `npt.NDArray[T]`, where `T` is a specific `numpy.dtype` (e.g., `np.float32`, `np.int64`, etc.)
+  - It would be even better if you could specify the shape using `typing.Literal` (e.g., `npt.NDArray[Literal[2, 3], np.float32]` for a 2x3 float32 array).
+- Prefer using `pathlib` module over `os.path` for file and path manipulations.
+- Prefer using `pydantic.BaseModel` over `dataclasses.dataclass` for data validation and serialization.
+- Use `logger.exception` for logging exceptions with stack traces instead of `logger.error(f"Error occured: {e}")`
+- Use `logger.xxx()` for logging instead of `print()`
+- Do not use emojis or any special characters in code comments or log messages.
+- Use f-strings for string formatting instead of `str.format()` or concatenation.
+- Do not write docsctrings, unless explicitly requested.
+- Prefer defining functions over classes with methods when state is not needed.
+- Use `pydantic_settings.BaseSettings` for configuration settings.
+- Always run `ruff format <modified files>` and `ruff check <modified files>` (add `--fix` to `ruff check` to auto-fix some of the issues).
+- Use semantic git commit messages (e.g., `feat: add new feature`, `fix: correct a bug`, `docs: update documentation`).
